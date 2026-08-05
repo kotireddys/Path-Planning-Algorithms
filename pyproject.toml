@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "path-planning-algorithms"
+version = "0.1.0"
+description = "Educational implementations of classic path planning algorithms (A*, RRT, RRT*, Dubins, and 3D/dynamic/kinodynamic variants)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+dependencies = [
+    "numpy",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib", "imageio"]
+
+[tool.setuptools]
+packages = ["path_planning"]

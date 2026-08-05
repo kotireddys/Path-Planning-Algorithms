@@ -1,0 +1,31 @@
+name: Docker Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push image (no heavy PX4)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: phase2/Dockerfile.ros2_px4_full
+          push: false
+          tags: path-planning-algorithms:phase2
+          build-args: |
+            BUILD_PX4=false
+            BUILD_MICROXRCE=false
