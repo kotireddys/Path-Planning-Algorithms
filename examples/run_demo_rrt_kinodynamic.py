@@ -13,14 +13,14 @@ def run_demo():
     obstacles = [(5.0, 5.0, 0.0, 2.0)] # x, y, z, size
     
     path = rrt_3d_kinodynamic(
-        start, 
-        goal, 
-        bounds, 
-        obstacles, 
-        max_iters=10000, 
+        start,
+        goal,
+        bounds,
+        obstacles,
+        max_iters=20000,
         step_size=0.5,
-        max_yaw_change=math.pi/8,
-        max_pitch_change=math.pi/8
+        max_yaw_change=math.pi/4,
+        max_pitch_change=math.pi/4
     )
     
     if path:
