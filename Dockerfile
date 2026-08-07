@@ -1,5 +1,5 @@
 # Minimal developer Dockerfile for Path-Planning-Algorithms
-# This is a lightweight Python container. For Phase 2 (ROS2 / PX4 / Isaac Sim)
+# This is a lightweight Python container. For Phase 2 (ROS2 / PX4 / Gazebo)
 # create a derived image or use a more feature-complete base (see README).
 
 FROM python:3.11-slim
