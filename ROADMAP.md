@@ -9,9 +9,9 @@ Phase 1 — 2D Path Planning Sandbox (current)
 - Provide visualization (matplotlib) and animated GIFs for each algorithm.
 - Deliverable: `Path-Planning-Algorithms` repository with demos and GIFs.
 
-Phase 2 — Connect to 3D Simulator (PX4 + Isaac Sim)
+Phase 2 — Connect to 3D Simulator (PX4 + Gazebo)
 - Provide scripts and Dockerfile to run PX4 SITL and bridge telemetry to ROS 2.
-- Load a quadcopter in NVIDIA Isaac Sim and write ROS 2 nodes for control.
+- Load a quadcopter in Gazebo and write ROS 2 nodes for control.
 - Deliverable: `ROS2-Drone-Controller` repository with instructions and recordings.
 
 Phase 3 — SLAM & Collision Avoidance (Full stack)
