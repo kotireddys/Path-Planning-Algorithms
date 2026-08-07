@@ -1,6 +1,8 @@
 Path-Planning-Algorithms
 ========================
 
+**Author:** Koti Reddy Syamala
+
 Phase 1: 2D Path Planning Sandbox (A*, RRT, RRT*, Dubins)
 
 This repository contains educational implementations of classic 2D path planning
