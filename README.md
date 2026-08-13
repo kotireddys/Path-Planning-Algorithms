@@ -1,16 +1,26 @@
 # Path-Planning-Algorithms
 
+[![CI](https://github.com/koti-s/Path-Planning-Algorithms/actions/workflows/ci.yml/badge.svg)](https://github.com/koti-s/Path-Planning-Algorithms/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
-![Tests](https://img.shields.io/badge/tests-8%20passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 **Author:** Koti Reddy Syamala
 
-Educational, from-scratch implementations of classic and modern path
-planning algorithms in Python, with matplotlib/imageio visualizations for
-every one of them. This is Phase 1 of a three-phase robotics portfolio — see
-[ROADMAP.md](ROADMAP.md) for how it connects to the PX4/Gazebo and SLAM
-phases in the sibling repos.
+Eleven path planning algorithms, implemented from scratch and visualized —
+not wrappers around a library. This is Phase 1 of a three-phase robotics
+portfolio; see [ROADMAP.md](ROADMAP.md) for how it connects to the
+PX4/Gazebo and SLAM phases in the sibling repos.
+
+## Contents
+
+- [Gallery](#gallery)
+- [Algorithms](#algorithms)
+- [Performance](#performance)
+- [Interactive & comparison tools](#interactive--comparison-tools)
+- [Quick start](#quick-start)
+- [Testing](#testing)
+- [Project structure](#project-structure)
+- [Roadmap](#roadmap)
 
 ## Gallery
 
@@ -57,6 +67,37 @@ find the detour, instead of rerunning A* over the whole grid.
 | RRT (3D, continuous) | [`path_planning/rrt_3d_continuous.py`](path_planning/rrt_3d_continuous.py) | RRT in continuous 3D space with cuboid obstacles, no voxel grid. |
 | Kinodynamic RRT | [`path_planning/rrt_kinodynamic.py`](path_planning/rrt_kinodynamic.py) | RRT over `(x, y, z, yaw, pitch)` states with bounded per-step yaw/pitch change, for vehicles that can't turn in place. |
 | Dynamic-obstacle RRT | [`path_planning/rrt_dynamic.py`](path_planning/rrt_dynamic.py) | RRT in space-time against moving [`DynamicObstacle`](path_planning/dynamic_obstacle.py)s (linear-velocity AABBs). |
+
+## Performance
+
+[`path_planning/a_star_optimized.py`](path_planning/a_star_optimized.py) is
+a numba-JIT rewrite of A*: the grid becomes a flat array, nodes become flat
+`y * width + x` indices, and the open set is a hand-rolled binary heap over
+numpy arrays — because numba can't compile Python's `heapq` on arbitrary
+objects, getting a real speedup means never leaving compiled code during
+the search. Benchmark (`benchmarks/compare_astar.py`, best of 7 runs,
+JIT warm-up excluded):
+
+| Grid | Original | Optimized | Speedup |
+|---|---|---|---|
+| 100×100 | 5.8 ms | 0.05 ms | 126× |
+| 200×200 | 27.6 ms | 0.5 ms | 60× |
+| 400×400 | 139.3 ms | 1.3 ms | 110× |
+| 800×800 | 717.1 ms | 3.2 ms | 226× |
+
+This is intentionally scoped to A* only. The sampling-based planners
+(RRT/RRT*/Informed RRT*/PRM) bottleneck on collision checks against a
+growing Python list of tree nodes with dict-based parent/cost bookkeeping —
+JIT-compiling that would mean a much larger data-structure rewrite, not a
+decorator, so it's left as future work rather than shipped half-done.
+
+`numba` is an optional extra, not a base dependency (it's a ~60MB
+LLVM-backed compiler toolchain):
+
+```bash
+pip install -e ".[perf]"
+python benchmarks/compare_astar.py
+```
 
 ## Interactive & comparison tools
 
@@ -105,14 +146,16 @@ python examples/run_demo_rrt_kinodynamic.py       # kinodynamic RRT, console out
 pytest tests/
 ```
 
-8 tests covering the grid, A* (2D/3D), D* Lite (initial search + replan),
-RRT, Informed RRT*, and PRM.
+13 tests covering the grid, A* (2D/3D/JIT-optimized), D* Lite (initial
+search + replan), RRT, Informed RRT*, and PRM. The optimized-A* tests skip
+automatically if the optional `perf` extra (numba) isn't installed.
 
 ## Project structure
 
 ```
 path_planning/     algorithm implementations (2D, 3D, dynamic, kinodynamic)
 examples/          runnable demos, interactive viewers, comparison tools
+benchmarks/        performance benchmarks for the numba-optimized A*
 tests/             pytest suite
 visualize.py        shared matplotlib/imageio helpers for frame generation
 output/             generated images/GIFs for the newer demos
