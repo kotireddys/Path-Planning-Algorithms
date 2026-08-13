@@ -16,23 +16,23 @@ phases in the sibling repos.
 
 <table>
 <tr>
-<td align="center"><b>A*</b><br><img src="astar_demo.gif" width="260"></td>
-<td align="center"><b>RRT</b><br><img src="rrt_demo.gif" width="260"></td>
-<td align="center"><b>RRT*</b><br><img src="rrtstar_demo.gif" width="260"></td>
+<td align="center"><b>A*</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/astar_demo.gif" width="260"></td>
+<td align="center"><b>RRT</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/rrt_demo.gif" width="260"></td>
+<td align="center"><b>RRT*</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/rrtstar_demo.gif" width="260"></td>
 </tr>
 <tr>
-<td align="center"><b>Informed RRT*</b><br><img src="output/informed_rrt_star_demo.gif" width="260"></td>
-<td align="center"><b>Dubins Path</b><br><img src="dubins_demo.gif" width="260"></td>
-<td align="center"><b>PRM</b><br><img src="output/prm_demo.gif" width="260"></td>
+<td align="center"><b>Informed RRT*</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/output/informed_rrt_star_demo.gif" width="260"></td>
+<td align="center"><b>Dubins Path</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/dubins_demo.gif" width="260"></td>
+<td align="center"><b>PRM</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/output/prm_demo.gif" width="260"></td>
 </tr>
 <tr>
-<td align="center"><b>D* Lite — initial search</b><br><img src="d_star_lite_initial.gif" width="260"></td>
-<td align="center"><b>D* Lite — incremental replan</b><br><img src="d_star_lite_replanned.gif" width="260"></td>
-<td align="center"><b>Dynamic-obstacle RRT</b><br><img src="output/rrt_dynamic_animation.gif" width="260"></td>
+<td align="center"><b>D* Lite — initial search</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/d_star_lite_initial.gif" width="260"></td>
+<td align="center"><b>D* Lite — incremental replan</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/d_star_lite_replanned.gif" width="260"></td>
+<td align="center"><b>Dynamic-obstacle RRT</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/output/rrt_dynamic_animation.gif" width="260"></td>
 </tr>
 <tr>
-<td align="center"><b>3D RRT (cube obstacles)</b><br><img src="output/rrt_3d_cubes_demo.png" width="260"></td>
-<td align="center"><b>Dynamic-obstacle RRT (snapshot)</b><br><img src="output/rrt_dynamic_demo.png" width="260"></td>
+<td align="center"><b>3D RRT (cube obstacles)</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/output/rrt_3d_cubes_demo.png" width="260"></td>
+<td align="center"><b>Dynamic-obstacle RRT (snapshot)</b><br><img src="https://raw.githubusercontent.com/kotireddys/Path-Planning-Algorithms/main/output/rrt_dynamic_demo.png" width="260"></td>
 <td></td>
 </tr>
 </table>
