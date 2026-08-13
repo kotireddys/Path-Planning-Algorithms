@@ -38,18 +38,17 @@ def frames_from_astar(grid, visited_order, path, figsize=(6, 6)):
     return frames
 
 
-def frames_from_rrt(grid, nodes, parent, visited_order, path_pts=None, figsize=(6, 6)):
+def frames_from_rrt(grid, nodes, parent, visited_order, path_pts=None, figsize=(6, 6), steps_per_frame: int = 1):
     frames = []
-    for k in range(1, len(visited_order) + 1):
+
+    def render(reveal_count):
         fig, ax = plt.subplots(figsize=figsize)
         ax.imshow(grid.cells, cmap='gray_r')
-        # draw tree up to k
-        used = set()
-        for i, n in enumerate(nodes):
-            if i == 0:
-                continue
-            if i - 1 >= len(visited_order):
-                break
+        # draw tree edges for the first `reveal_count` nodes only, so the
+        # animation actually grows over time instead of showing the final
+        # tree in every frame (which made every frame identical and the GIF
+        # encoder collapse them all into a single static frame).
+        for i in range(1, reveal_count):
             p = parent.get(i)
             if p is None:
                 continue
@@ -65,8 +64,18 @@ def frames_from_rrt(grid, nodes, parent, visited_order, path_pts=None, figsize=(
         buf = fig.canvas.buffer_rgba()
         w, h = fig.canvas.get_width_height()
         image = np.frombuffer(buf, dtype=np.uint8).reshape((h, w, 4))[..., :3]
-        frames.append(image)
         plt.close(fig)
+        return image
+
+    total = len(nodes)
+    if total <= 1:
+        return frames
+    reveal = 2
+    while reveal <= total:
+        frames.append(render(reveal))
+        reveal += max(1, steps_per_frame)
+    if frames and reveal - max(1, steps_per_frame) != total:
+        frames.append(render(total))
     return frames
 
 
@@ -92,6 +101,41 @@ def frames_from_dubins(grid, path_pts, figsize=(6, 6), steps_per_frame: int = 4)
         frames.append(image)
         plt.close(fig)
         idx += steps_per_frame
+    return frames
+
+
+def frames_from_prm(grid, nodes, edges, path_pts=None, figsize=(6, 6), steps_per_frame: int = 3):
+    frames = []
+
+    def render(path_prefix_len):
+        fig, ax = plt.subplots(figsize=figsize)
+        ax.imshow(grid.cells, cmap='gray_r')
+        for i, neighbors in edges.items():
+            x1, y1 = nodes[i]
+            for j, _ in neighbors:
+                if j > i:
+                    x2, y2 = nodes[j]
+                    ax.plot([x1, x2], [y1, y2], color='cyan', linewidth=0.3, alpha=0.4)
+        if path_pts:
+            xs = [p[0] for p in path_pts[:path_prefix_len]]
+            ys = [p[1] for p in path_pts[:path_prefix_len]]
+            ax.plot(xs, ys, color='red', linewidth=2)
+        ax.set_axis_off()
+        fig.canvas.draw()
+        buf = fig.canvas.buffer_rgba()
+        w, h = fig.canvas.get_width_height()
+        image = np.frombuffer(buf, dtype=np.uint8).reshape((h, w, 4))[..., :3]
+        plt.close(fig)
+        return image
+
+    # first frame: the full roadmap with no path drawn yet
+    frames.append(render(0))
+    if path_pts:
+        idx = 1
+        while idx <= len(path_pts):
+            frames.append(render(idx))
+            idx += steps_per_frame
+        frames.append(render(len(path_pts)))
     return frames
 
 
