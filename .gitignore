@@ -27,11 +27,12 @@ venv/
 .DS_Store
 Thumbs.db
 
-# logs and output
+# test cache
+.pytest_cache/
+
+# logs
 logs/
 log/
-output/
-*.gif
 
 # ROS/colcon usual
 build/
