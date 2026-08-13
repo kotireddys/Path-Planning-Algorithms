@@ -30,4 +30,5 @@ def demo_informed_rrt_star(out_dir):
 
 
 if __name__ == '__main__':
-    demo_informed_rrt_star('.')
+    os.makedirs('output', exist_ok=True)
+    demo_informed_rrt_star('output')

@@ -26,4 +26,5 @@ def demo_prm(out_dir):
 
 
 if __name__ == '__main__':
-    demo_prm('.')
+    os.makedirs('output', exist_ok=True)
+    demo_prm('output')

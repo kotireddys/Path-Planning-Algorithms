@@ -15,9 +15,14 @@ dependencies = [
 
 [project.optional-dependencies]
 viz = ["matplotlib", "imageio"]
+perf = ["numba"]
 
 [tool.setuptools]
 packages = ["path_planning"]
 
 [tool.pytest.ini_options]
+# `pythonpath` puts the repo root on sys.path for every test run, so
+# `import path_planning` works whether pytest is invoked as `pytest`,
+# `python -m pytest`, or from CI, with no editable install required.
+pythonpath = ["."]
 addopts = "-p no:ament_copyright -p no:ament_flake8 -p no:ament_xmllint -p no:ament_pep257 -p no:ament_lint -p no:launch_testing -p no:launch_testing_ros_pytest_entrypoint -p no:launch_ros"
