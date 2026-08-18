@@ -101,7 +101,7 @@ python benchmarks/compare_astar.py
 
 ## Interactive & comparison tools
 
-Step-through viewers built on the `_steps()` generators — useful for
+Step-through viewers built on the `_steps()` generators, useful for
 building intuition, not just watching a finished GIF:
 
 - **`examples/interactive_astar.py`** - step A* one expansion at a time; shows the open/closed sets and live g/h/f costs.
